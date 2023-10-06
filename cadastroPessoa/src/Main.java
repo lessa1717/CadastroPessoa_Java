@@ -11,7 +11,21 @@ public class Main {
         String opcao ;
 
         do {
-            System.out.println("");
+            System.out.println("Escolha uma opção:\n1 - Pessoa Física\n2 - Pessoa Jurídica\n0 - Sair");
+        opcao = leitor.nextLine();
+
+        switch (opcao){
+            case "1":
+            break;
+            case "2":
+                break;
+            case "0":
+                break;
+            default:
+                break;
+
+        }
+
         }while(!opcao.equals("0"));
     }
 }
