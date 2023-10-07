@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<PessoaFisica> listaPf = new ArrayList<>();
+        PessoaFisica metodoPF = new PessoaFisica();
 
 
 
@@ -48,8 +50,16 @@ public class Main {
 //                            novaPF.dataNascimento = LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
                             System.out.println("Digite a data de nascimento (dd/mm/aaaa): ");
-                            String dataNascimentoStr = leitor.nextLine();
-                            novaPF.dataNascimento = LocalDate.parse(dataNascimentoStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                            String dataNascimento = leitor.nextLine();
+                            novaPF.dataNascimento = LocalDate.parse(dataNascimento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                            Period idade = Period.between(novaPF.dataNascimento,LocalDate.now());
+                            if (idade.getYears() >= 18){
+                                System.out.println("Idade Válida!");
+                            }else{
+                                System.out.println("Idade inválida!");
+                                break;
+                            }
 
                             System.out.println("Digite o logradouro");
                             novoEndPf.logradouro = leitor.nextLine();
@@ -60,7 +70,7 @@ public class Main {
                             System.out.println("Este endereço é comercial? S/N:");
                             String endCom = leitor.nextLine();
 
-                            if (endCom.equals("S")){
+                            if (endCom.equals("S") || endCom.equals("s")){
                                 novoEndPf.endComercial=true;
                             }else {
                                 novoEndPf.endComercial=false;
@@ -76,9 +86,11 @@ public class Main {
                         case "2":
                            
                             if (listaPf.size() > 0){
+
                                 for (PessoaFisica cadaPf : listaPf) {
                                     System.out.println("Nome: \n"+cadaPf.nome+" CPF: "+cadaPf.cpf+" Data de Nascimento: "
-                                            +cadaPf.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"))
+                                            +cadaPf.dataNascimento.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"))+
+                                            "Imposto a ser pago: "+metodoPF.CalcularImposto(cadaPf.rendimento)
                                     +" Endereco: "+ cadaPf.endereco.logradouro +" -"+cadaPf.endereco.numero);
                                     System.out.println();
                                     System.out.println("Aperte ENTER para continuar!");
